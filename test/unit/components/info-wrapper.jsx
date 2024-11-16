@@ -1,12 +1,13 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
+import "@testing-library/jest-dom"
 import { fromJS } from "immutable"
 import InfoContainer from "core/containers/info"
 
 describe("<InfoContainer/>", function () {
 
   const components = {
-    info: () => <span className="mocked-info"/>
+    info: () => <span data-testid="mocked-info" className="mocked-info"/>
   }
   const mockedProps = {
     specSelectors: {
@@ -33,8 +34,8 @@ describe("<InfoContainer/>", function () {
     render(<InfoContainer {...props}/>)
 
     // Then
-    const renderedInfo = screen.getByTestId("span.mocked-info")
-    expect(renderedInfo.length).toEqual(1)
+    const renderedInfo = screen.getByTestId("mocked-info")
+    expect(renderedInfo).toBeInTheDocument()
   })
 
   it("does not render Info inside InfoContainer if no info is provided", function () {
@@ -45,11 +46,11 @@ describe("<InfoContainer/>", function () {
     props.specSelectors.info = function () {return fromJS([])}
 
     // When
-    let wrapper = mount(<InfoContainer {...props}/>)
+    render(<InfoContainer {...props}/>)
 
     // Then
-    const renderedInfo = wrapper.find("span.mocked-info")
-    expect(renderedInfo.length).toEqual(0)
+    const renderedInfo = screen.queryByTestId("mocked-info")
+    expect(renderedInfo).not.toBeInTheDocument()
   })
 
   it("does not render Info inside InfoContainer if info is undefined", function () {
@@ -58,10 +59,10 @@ describe("<InfoContainer/>", function () {
     let props = {...mockedProps}
 
     // When
-    let wrapper = mount(<InfoContainer {...props}/>)
+    render(<InfoContainer {...props}/>)
 
     // Then
-    const renderedInfo = wrapper.find("span.mocked-info")
-    expect(renderedInfo.length).toEqual(0)
+    const renderedInfo = screen.queryByTestId("mocked-info")
+    expect(renderedInfo).not.toBeInTheDocument()
   })
 })

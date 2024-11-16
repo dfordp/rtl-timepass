@@ -118,9 +118,9 @@ export default class Operation extends PureComponent {
     const validationErrors = specSelectors.validationErrors([path, method])
 
     return (
-        <div className={deprecated ? "opblock opblock-deprecated" : isShown ? `opblock opblock-${method} is-open` : `opblock opblock-${method}`} id={escapeDeepLinkPath(isShownKey.join("-"))} >
-          <OperationSummary operationProps={operationProps} isShown={isShown} toggleShown={toggleShown} getComponent={getComponent} authActions={authActions} authSelectors={authSelectors} specPath={specPath} />
-          <Collapse isOpened={isShown}>
+        <div data-testid="opblock" className={deprecated ? "opblock opblock-deprecated" : isShown ? `opblock opblock-${method} is-open` : `opblock opblock-${method}`} id={escapeDeepLinkPath(isShownKey.join("-"))} >
+          <OperationSummary data-testid="opblock-summary-method" operationProps={operationProps} isShown={isShown} toggleShown={toggleShown} getComponent={getComponent} authActions={authActions} authSelectors={authSelectors} specPath={specPath} />
+          <Collapse data-testid="[isOpened]" isOpened={isShown}>
             <div className="opblock-body">
               { (operation && operation.size) || operation === null ? null :
                 <RollingLoadSVG height="32px" width="32px" className="opblock-loading-animation" />
@@ -150,6 +150,7 @@ export default class Operation extends PureComponent {
 
               { !operation || !operation.size ? null :
                 <Parameters
+                  data-testid="opblock-summary-path opblock-summary"
                   parameters={parameters}
                   specPath={specPath.push("parameters")}
                   operation={operation}

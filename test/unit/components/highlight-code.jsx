@@ -36,9 +36,9 @@ describe("<HighlightCode />", () => {
     const value = "test text"
     const props = { children: value , getConfigs: fakeGetConfigs, getComponent: fakeGetComponent }
     render(<HighlightCode {...props} />)
-    const preTag = wrapper.find("pre")
-
-    expect(preTag.length).toEqual(1)
-    expect(preTag.text()).toEqual(value)
+    
+    const content = screen.getByText(value)
+    expect(content).toBeInTheDocument()
+    expect(content.tagName.toLowerCase()).toEqual("span") 
   })
 })

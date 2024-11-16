@@ -69,14 +69,14 @@ const HighlightCode = ({
     <div className="highlight-code" ref={rootRef}>
       {canCopy && (
         <div className="copy-to-clipboard">
-          <CopyToClipboard text={children}>
+          <CopyToClipboard data-testid="copy-to-clipboard" text={children}>
             <button />
           </CopyToClipboard>
         </div>
       )}
 
       {!downloadable ? null : (
-        <button className="download-contents" onClick={handleDownload}>
+        <button data-testid="download-contents" className="download-contents" onClick={handleDownload}>
           Download
         </button>
       )}

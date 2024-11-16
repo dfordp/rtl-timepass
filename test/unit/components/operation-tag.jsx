@@ -1,11 +1,12 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { shallow } from "enzyme"
 import OperationTag from "core/components/operation-tag"
 import Im from "immutable"
 import { Link } from "core/components/layout-utils"
 
-describe("<OperationTag/>", function() {
-  it("render externalDocs URL for swagger v2", function() {
+describe("<OperationTag/>", function(){
+  it("render externalDocs URL for swagger v2", function(){
+
     const dummyComponent = () => null
     const components = {
       Collapse: () => dummyComponent,
@@ -39,13 +40,14 @@ describe("<OperationTag/>", function() {
       }
     }
 
-    render(<OperationTag {...props} />)
+    let wrapper = shallow(<OperationTag {...props}/>)
 
-    const opblockTag = screen.getByRole("heading", { name: /testtag/i })
-    expect(opblockTag).toBeInTheDocument()
+    const opblockTag = wrapper.find(".opblock-tag")
+    expect(opblockTag.length).toEqual(1)
+    expect(opblockTag.getElement().type).toEqual("h3")
 
-    const renderedLink = screen.getByRole("link", { name: /Find out more/i })
-    expect(renderedLink).toBeInTheDocument()
-    expect(renderedLink).toHaveAttribute("href", "http://swagger.io")
+    const renderedLink = wrapper.find("Link")
+    expect(renderedLink.length).toEqual(1)
+    expect(renderedLink.props().href).toEqual("http://swagger.io")
   })
 })

@@ -48,7 +48,7 @@ describe("<FilterContainer/>", () => {
     render(<FilterContainer {...props} />)
 
     // Then
-    const renderedColInsideFilter = screen.queryByRole("column") // Adjust if needed
+    const renderedColInsideFilter = screen.queryByTestId("filter-col")
     expect(renderedColInsideFilter).not.toBeInTheDocument()
   })
 })
